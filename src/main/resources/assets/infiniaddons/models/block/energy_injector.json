@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+  "up":"infiniaddons:blocks/energy_injector_top",
+    "down":"infiniaddons:blocks/energy_injector_down",
+    "side":"infiniaddons:blocks/energy_injector_right"
+  }
+}

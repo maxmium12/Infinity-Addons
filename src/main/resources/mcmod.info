@@ -1,0 +1,16 @@
+[
+{
+  "modid": "infiniaddons",
+  "name": "Infinity Addons",
+  "description": "An mod made by maxmium for his and his friends server.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "Maxmium,cpw,Norch,etc",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,2 @@
+commands.getrecipelist.usage=/getrecipelist {Player} Get Energy Injector Recipes(For debug)
+commands.getrecipelist.success=%d

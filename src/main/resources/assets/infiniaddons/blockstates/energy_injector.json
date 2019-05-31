@@ -1,0 +1,40 @@
+{
+"forge_marker":1,
+  "defaults": {
+    "model": "orientable",
+    "textures": {
+      "top": "infiniaddons:blocks/energy_injector_top",
+      "side": "infiniaddons:blocks/energy_injector_right"
+    },
+  "variants": {
+    "type": {
+      "energy_injector": {
+        "active": {
+          "true": {
+            "textures":{ "front":"infiniaddons:blocks/energy_injector_front_on"}
+          },
+          "false": {
+            "textures":{ "front":"infiniaddons:blocks/energy_injector_front"}
+          }
+
+          }
+        },
+      "facing": {
+        "north": {
+        },
+        "south": {
+          "y": 180
+        },
+        "west": {
+          "y": 270
+        },
+        "east": {
+          "y": 90
+      }
+    }
+    }
+  }
+  }
+}
+
+
