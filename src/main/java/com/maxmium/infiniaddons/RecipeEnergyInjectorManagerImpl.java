@@ -60,7 +60,7 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         return findRecipe(input).chance;
 
     }
-
+    //Just for debug
     public String toString() {
 
         for (Recipe recipe : recipes) {
@@ -72,14 +72,11 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         }
         return String.format(Locale.US,"No recipes");
     }
-    //Just for debug
     public Boolean isRightItem(ItemStack input){
-        ItemStack in=input.copy();
-        in.setCount(1);
-        if(findRecipe(in).input.isEmpty()){
-            return false;
+        if(findRecipe(input).input==input){
+            return true;
         }
-        return true;
+        return false;
     }
     public static class Recipe{
     private   ItemStack input=ItemStack.EMPTY;

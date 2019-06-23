@@ -6,6 +6,7 @@ import com.maxmium.infiniaddons.RecipeEnergyInjectorManagerImpl;
 import com.maxmium.infiniaddons.item.ItemEnergyDust;
 import ic2.api.energy.tile.IEnergyEmitter;
 import ic2.api.energy.tile.IEnergySink;
+import ic2.core.recipe.OreDictionaryEntries;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.advancements.critereon.OredictItemPredicate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.Loader;
@@ -20,16 +22,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import net.minecraftforge.oredict.*;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class TileEnergyInjector extends TileMachineBase {
-    public static int ProductTick=0;
-    private int progress;
     protected double recievedEnergyUnit=0;
     protected int Runtime=0;
-    private ItemStack itemEnergyDust=new ItemStack(ModItems.itemEnergyDust);
 
     protected ItemStackHandler InputInventory=new ItemStackHandler();
     protected ItemStackHandler OutputInventory=new ItemStackHandler();
@@ -81,8 +81,7 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     protected void doWork() {
-        ItemStack itemstack1=InputInventory.extractItem(0,1,true);
-        ItemStack itemstack=itemstack1.copy();
+        ItemStack itemstack=InputInventory.extractItem(0,1,true);
         Map<String,ItemStack> output=RecipeEnergyInjectorManagerImpl.INSTANCE.getResult(itemstack);
         double chance=RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
         ItemStack output1=output.get("output1");
@@ -93,7 +92,7 @@ public class TileEnergyInjector extends TileMachineBase {
                if (trash <=chance) {
                    OutputInventory.insertItem(0,output1, false);
                } else {
-                   Trash.insertItem(0, trashitem, true);
+                   Trash.insertItem(0, trashitem, false);
                }
                Runtime = 0;
                markDirty();
@@ -108,8 +107,7 @@ public class TileEnergyInjector extends TileMachineBase {
     }
 
     @Override
-    protected void onWorkStopped() {
-        progress=0;
+    protected void onWorkStopped() {Runtime=0;
     }
 
     @Override
@@ -154,7 +152,9 @@ public class TileEnergyInjector extends TileMachineBase {
         return Runtime;
     }
     public int getTotalProductTick() {
-        return (int)RecipeEnergyInjectorManagerImpl.INSTANCE.getenergy(InputInventory.extractItem(0,1,true))/8192;
+        return (int)recipeEnergyInjectorManager.getenergy(InputInventory.extractItem(0,1,true))/8192;
     }
+
+
 }
 

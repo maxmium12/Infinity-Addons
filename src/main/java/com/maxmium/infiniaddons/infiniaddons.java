@@ -1,6 +1,7 @@
 package com.maxmium.infiniaddons;
 
 import com.maxmium.infiniaddons.common.CommonProxy;
+import com.maxmium.infiniaddons.common.ConfigLoader;
 import com.maxmium.infiniaddons.crafting.RecipeHandler;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 
-@Mod(modid = infiniaddons.MODID, name = infiniaddons.NAME, version = infiniaddons.VERSION, acceptedMinecraftVersions = "1.12.2")
+@Mod(modid = infiniaddons.MODID, name = infiniaddons.NAME, version = infiniaddons.VERSION, acceptedMinecraftVersions = "1.12.2",dependencies = "required-after:avaritia@[3.3.0]")
 public class infiniaddons {
     public static final String MODID="infiniaddons";
     public static final String NAME="Infinity Addons";
@@ -34,6 +35,7 @@ public static CommonProxy proxy;
     {
     proxy.preInit();
         RecipeHandler.init();
+        new ConfigLoader(event);
     }
 
     @Mod.EventHandler
