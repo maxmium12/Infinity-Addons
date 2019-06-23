@@ -34,6 +34,7 @@ public class TileEnergyInjector extends TileMachineBase {
     protected ItemStackHandler InputInventory=new ItemStackHandler();
     protected ItemStackHandler OutputInventory=new ItemStackHandler();
     protected ItemStackHandler Trash=new ItemStackHandler();
+    RecipeEnergyInjectorManagerImpl recipeEnergyInjectorManager=new RecipeEnergyInjectorManagerImpl();
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing)
     {
@@ -86,8 +87,8 @@ public class TileEnergyInjector extends TileMachineBase {
         double chance=RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
         ItemStack output1=output.get("output1");
         ItemStack trashitem=output.get("output2");
-        if(isRightItem(itemstack)) {
-           if(++Runtime>=getProductTick()) {
+        if(recipeEnergyInjectorManager.isRightItem(itemstack)) {
+           if(Runtime>=getTotalProductTick()) {
                double trash = Math.random();
                if (trash <=chance) {
                    OutputInventory.insertItem(0,output1, false);
@@ -98,6 +99,11 @@ public class TileEnergyInjector extends TileMachineBase {
                markDirty();
 
            }
+            Runtime++;
+        }
+        else {
+            Runtime=0;
+            markDirty();
         }
     }
 
@@ -148,17 +154,7 @@ public class TileEnergyInjector extends TileMachineBase {
         return Runtime;
     }
     public int getTotalProductTick() {
-        return RecipeEnergyInjectorManagerImpl.INSTANCE.getenergy(InputInventory.extractItem(0,1,true))/8192;
+        return (int)RecipeEnergyInjectorManagerImpl.INSTANCE.getenergy(InputInventory.extractItem(0,1,true))/8192;
     }
-    private boolean isRightItem(ItemStack stack){
-
-            ArrayList<ItemStack> a=RecipeEnergyInjectorManagerImpl.INSTANCE.getInputList();
-            int j=a.size();
-            for (int b=0;b<j;b++){
-                if(a.get(b)==stack){
-                    return true;
-                }
-            }
-            return false;
-            }
 }
+

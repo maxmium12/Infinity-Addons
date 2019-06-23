@@ -14,19 +14,23 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
     public void addRecipe(ItemStack input, ItemStack output1, ItemStack output2, int energy, double chance) {
         this.recipes.add(new Recipe(input, output1, output2, energy, chance));
     }
-
-    @Override
-    public Map<String, ItemStack> getResult(ItemStack input) {
+    public Recipe findRecipe(ItemStack in){
         for (Recipe recipe : recipes) {
             try {
-                if (recipe.input == input) {
-                    return recipesMap(recipe.output1, recipe.output2);
+                if (recipe.input == in) {
+                    return recipe;
                 }
             } catch (NullPointerException | IllegalArgumentException e) {
 
             }
         }
-        return recipesMap(ItemStack.EMPTY, ItemStack.EMPTY);
+        return new Recipe(ItemStack.EMPTY,ItemStack.EMPTY,ItemStack.EMPTY,1,0);
+    }
+
+    @Override
+    public Map<String, ItemStack> getResult(ItemStack input) {
+       Recipe out=findRecipe(input);
+        return recipesMap(out.output1,out.output2);
     }
 
     public List<Recipe> getRecipeList() {
@@ -49,29 +53,11 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
     }
 
     public int getenergy(ItemStack input) {
-        for (Recipe recipe : recipes) {
-            try {
-                if (recipe.input == input) {
-                    return recipe.energy;
-                }
-            } catch (NullPointerException | IllegalArgumentException e) {
-
-            }
-        }
-        return 1;
+       return findRecipe(input).energy;
     }
 
     public double getChance(ItemStack input) {
-        for (Recipe recipe : recipes) {
-            try {
-                if (recipe.input == input) {
-                    return recipe.chance;
-                }
-            } catch (NullPointerException | IllegalArgumentException e) {
-
-            }
-        }
-        return 0;
+        return findRecipe(input).chance;
 
     }
 
@@ -87,6 +73,14 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         return String.format(Locale.US,"No recipes");
     }
     //Just for debug
+    public Boolean isRightItem(ItemStack input){
+        ItemStack in=input.copy();
+        in.setCount(1);
+        if(findRecipe(in).input.isEmpty()){
+            return false;
+        }
+        return true;
+    }
     public static class Recipe{
     private   ItemStack input=ItemStack.EMPTY;
     private  ItemStack output1=ItemStack.EMPTY;
