@@ -73,7 +73,7 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         return String.format(Locale.US,"No recipes");
     }
     public Boolean isRightItem(ItemStack input){
-        if(findRecipe(input).input==input){
+        if(findRecipe(input).output1!=ItemStack.EMPTY){
             return true;
         }
         return false;

@@ -15,6 +15,8 @@ import net.minecraftforge.server.timings.TimeTracker;
 public abstract class TileMachineBase extends TileBase implements ITickable, IEnergySink {
     protected boolean isActive;
     protected TimeTracker offTracker = new TimeTracker();
+    private boolean isInEnergyNet;
+
     protected abstract void doWork();
     private boolean sendUpdatePacket;
     public boolean fullContainerSync;
@@ -23,26 +25,27 @@ public abstract class TileMachineBase extends TileBase implements ITickable, IEn
     @Override
     public void invalidate()
     {
+        if (!getWorld().isRemote && isInEnergyNet) {
+            isInEnergyNet = false;
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+        }
         super.invalidate();
-        if (!this.world.isRemote && Loader.isModLoaded("IC2"))
-        {
-            this.onIC2MachineUnloaded();
+
+    }
+    @Override
+    public void onLoad() {
+        if (!getWorld().isRemote && !isInEnergyNet) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+            isInEnergyNet = true;
         }
     }
 
-    private void onIC2MachineUnloaded() {
-        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
-    }
+
 
     @Override
     public final void update() {
         if (CommonUtils.isClientWorld(world)) {
             return;
-        }
-        if (!this.updated && Loader.isModLoaded("IC2"))
-        {
-            this.onIC2MachineLoaded();
-            this.updated = true;
         }
         if (canWork()) {
             if (!isActive && !wasActive) {
@@ -60,9 +63,6 @@ public abstract class TileMachineBase extends TileBase implements ITickable, IEn
         }
     }
 
-    private void onIC2MachineLoaded() {
-        MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
-    }
 
 
     protected abstract void onWorkStopped();

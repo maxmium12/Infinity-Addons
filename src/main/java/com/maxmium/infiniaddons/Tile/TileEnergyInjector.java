@@ -112,10 +112,7 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     protected boolean canWork() {
-        ItemStack itemStackinput=InputInventory.extractItem(0,1,true);
-        ItemStack itemStackoutput=OutputInventory.extractItem(0,1,true);
-        ItemStack trash=Trash.extractItem(0,1,true);
-        return !itemStackinput.isEmpty()&&itemStackoutput.getCount()<64&&trash.getCount()<64;
+        return !InputInventory.getStackInSlot(0).isEmpty()&&OutputInventory.getStackInSlot(0).getCount()<64&&Trash.getStackInSlot(0).getCount()<64;
     }
 
     public double getRequiredEnergyPerTick()
