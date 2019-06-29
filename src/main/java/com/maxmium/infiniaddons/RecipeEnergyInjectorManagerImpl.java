@@ -17,11 +17,11 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
     public Recipe findRecipe(ItemStack in){
         for (Recipe recipe : recipes) {
             try {
-                if (recipe.input == in) {
+                if (recipe.input.isItemEqual(in)) {
                     return recipe;
                 }
             } catch (NullPointerException | IllegalArgumentException e) {
-
+                //skip recipe
             }
         }
         return new Recipe(ItemStack.EMPTY,ItemStack.EMPTY,ItemStack.EMPTY,1,0);
@@ -35,14 +35,6 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
 
     public List<Recipe> getRecipeList() {
         return recipes;
-    }
-
-    public ArrayList<ItemStack> getInputList() {
-        ArrayList<ItemStack> a = new ArrayList<ItemStack>();
-        for (Recipe recipe : recipes) {
-            a.add(recipe.input);
-        }
-        return a;
     }
 
     private static Map<String, ItemStack> recipesMap(ItemStack output1, ItemStack output2) {
@@ -73,15 +65,12 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         return String.format(Locale.US,"No recipes");
     }
     public Boolean isRightItem(ItemStack input){
-        if(findRecipe(input).output1!=ItemStack.EMPTY){
-            return true;
-        }
-        return false;
+       return findRecipe(input).output1!=ItemStack.EMPTY;
     }
     public static class Recipe{
-    private   ItemStack input=ItemStack.EMPTY;
-    private  ItemStack output1=ItemStack.EMPTY;
-    private  ItemStack output2=ItemStack.EMPTY;
+    private   ItemStack input;
+    private  ItemStack output1;
+    private  ItemStack output2;
     private  int energy;
     private  double chance;
     private Recipe(ItemStack input,ItemStack output1,ItemStack output2,int energy,double chance){

@@ -16,11 +16,9 @@ public  class CommonProxy {
         new GuiHandler();
         new EntityLoader();
     }
-    public void serverStarting(FMLServerStartingEvent evt){
+
+    public void serverStarting(FMLServerStartingEvent evt) {
         new CommandHandler(evt);
 
-    }
-
-    public void addModelRegister(IModelRegister registryObject) {
     }
 }

@@ -46,11 +46,6 @@ public class ModBlocks{
 
     public static <V extends IForgeRegistryEntry<V>> V registerImpl(V registryObject, Consumer<V> registerCallback) {
         registerCallback.accept(registryObject);
-
-        if (registryObject instanceof IModelRegister) {
-            infiniaddons.proxy.addModelRegister((IModelRegister) registryObject);
-        }
-
         return registryObject;
     }
     public static ItemBlock registerItemBlock(Block block) {

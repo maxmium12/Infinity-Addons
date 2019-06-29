@@ -1,8 +1,11 @@
 package com.maxmium.infiniaddons;
 
+import codechicken.lib.gui.SimpleCreativeTab;
 import com.maxmium.infiniaddons.common.CommonProxy;
 import com.maxmium.infiniaddons.common.ConfigLoader;
 import com.maxmium.infiniaddons.crafting.RecipeHandler;
+import com.maxmium.infiniaddons.creativetab.CreativeTabsLoader;
+import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +31,6 @@ public class infiniaddons {
     public static infiniaddons instance;
 @SidedProxy(clientSide = "com.maxmium.infiniaddons.client.ClientProxy",serverSide = "com.maxmium.infiniaddons.common.CommonProxy")
 public static CommonProxy proxy;
-
 @Mod.EventHandler
 
     public void preInit(FMLPreInitializationEvent event)
@@ -36,6 +38,7 @@ public static CommonProxy proxy;
     proxy.preInit();
         RecipeHandler.init();
         new ConfigLoader(event);
+        new CreativeTabsLoader(event);
     }
 
     @Mod.EventHandler

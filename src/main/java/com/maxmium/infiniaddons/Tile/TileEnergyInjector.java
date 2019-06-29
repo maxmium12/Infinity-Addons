@@ -81,13 +81,15 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     protected void doWork() {
-        ItemStack itemstack=InputInventory.extractItem(0,1,true);
+        ItemStack itemstack=InputInventory.getStackInSlot(0);
+        itemstack.setCount(1);
         Map<String,ItemStack> output=RecipeEnergyInjectorManagerImpl.INSTANCE.getResult(itemstack);
         double chance=RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
         ItemStack output1=output.get("output1");
         ItemStack trashitem=output.get("output2");
         if(recipeEnergyInjectorManager.isRightItem(itemstack)) {
            if(Runtime>=getTotalProductTick()) {
+               itemstack.setCount(itemstack.getCount()-1);
                double trash = Math.random();
                if (trash <=chance) {
                    OutputInventory.insertItem(0,output1, false);

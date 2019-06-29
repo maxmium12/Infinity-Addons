@@ -8,6 +8,7 @@ import com.maxmium.infiniaddons.InfiniaddonsProps;
 import com.maxmium.infiniaddons.Tile.TileEnergyInjector;
 import com.maxmium.infiniaddons.Tile.TileMachineBase;
 import com.maxmium.infiniaddons.api.IModelRegister;
+import com.maxmium.infiniaddons.creativetab.CreativeTabsLoader;
 import com.maxmium.infiniaddons.gui.GuiHandler;
 import com.maxmium.infiniaddons.infiniaddons;
 import net.minecraft.block.Block;
@@ -61,7 +62,7 @@ public class BlockEnergyInjector extends BlockContainer implements IModelRegiste
         setHardness(20F);
         setResistance(100F);
         setSoundType(SoundType.STONE);
-        setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+        setCreativeTab(CreativeTabsLoader.tabInfiniaddons);
         setDefaultState(this.blockState.getBaseState().withProperty(HORIZONAL_FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
         setUnlocalizedName("energyinjector");
         setRegistryName("energy_injector");

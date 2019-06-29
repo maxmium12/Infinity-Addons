@@ -17,7 +17,7 @@ public class RecipeHandler {
         private ItemResource itemResource=new ItemResource(Avaritia.tab,"resource");
         public EnergyInjectorRecipes(){
             RecipeEnergyInjectorManagerImpl.INSTANCE.addRecipe(
-                    new ItemStack(new ItemResource(Avaritia.tab,"resource"),1,4)
+                    new ItemStack(itemResource,1,4)
                     ,new ItemStack(new ItemEnergyDust())
                     ,new ItemStack(Blocks.DIRT),24576000,
                     0.5);

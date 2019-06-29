@@ -2,6 +2,8 @@ package com.maxmium.infiniaddons.command;
 
 import com.maxmium.infiniaddons.RecipeEnergyInjectorManagerImpl;
 import com.maxmium.infiniaddons.events.EventHandler;
+import morph.avaritia.Avaritia;
+import morph.avaritia.item.ItemResource;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -27,7 +29,7 @@ public class CommandDebug extends CommandBase{
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         EntityPlayer player= CommandBase.getPlayer(server,sender,args[0]);
 
-        player.sendMessage(new TextComponentTranslation("abc"));
+        player.sendMessage(new TextComponentTranslation(String.valueOf(RecipeEnergyInjectorManagerImpl.INSTANCE.getenergy(new ItemStack(new ItemResource(Avaritia.tab,"resource"),1,4)))));
     }
     @Override
     public int getRequiredPermissionLevel(){
