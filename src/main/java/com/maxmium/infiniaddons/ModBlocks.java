@@ -1,6 +1,8 @@
 package com.maxmium.infiniaddons;
 
+import com.maxmium.infiniaddons.Block.BlockCobblestoneGenerator;
 import com.maxmium.infiniaddons.Block.BlockEnergyInjector;
+import com.maxmium.infiniaddons.Tile.TileCobblestoneGenerator;
 import com.maxmium.infiniaddons.Tile.TileEnergyInjector;
 import com.maxmium.infiniaddons.api.IModelRegister;
 import net.minecraft.block.Block;
@@ -25,11 +27,15 @@ import static com.maxmium.infiniaddons.infiniaddons.proxy;
 
 public class ModBlocks{
     public static BlockEnergyInjector blockEnergyInjector=new BlockEnergyInjector();
+    public static BlockCobblestoneGenerator blockCobblestoneGenerator=new BlockCobblestoneGenerator();
 
     public static void init() {
         blockEnergyInjector=registerBlock(new BlockEnergyInjector());
         registerItemBlock(blockEnergyInjector);
         GameRegistry.registerTileEntity(TileEnergyInjector.class,"energy_injector");
+        blockCobblestoneGenerator=registerBlock(new BlockCobblestoneGenerator());
+        registerItemBlock(blockCobblestoneGenerator);
+        GameRegistry.registerTileEntity(TileCobblestoneGenerator.class,"cobblestone_generator");
 
     }
 

@@ -1,6 +1,7 @@
 package com.maxmium.infiniaddons.Tile;
 
 import codechicken.lib.util.ItemUtils;
+import com.maxmium.infiniaddons.InfiniaddonsProps;
 import com.maxmium.infiniaddons.ModItems;
 import com.maxmium.infiniaddons.RecipeEnergyInjectorManagerImpl;
 import com.maxmium.infiniaddons.item.ItemEnergyDust;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class TileEnergyInjector extends TileMachineBase {
-    protected double recievedEnergyUnit=0;
+    protected double receivedEnergyUnit = 0;
     protected int Runtime=0;
 
     protected ItemStackHandler InputInventory=new ItemStackHandler();
@@ -81,33 +82,34 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     protected void doWork() {
-        ItemStack itemstack=InputInventory.getStackInSlot(0);
+        ItemStack itemstack = InputInventory.getStackInSlot(0);
         itemstack.setCount(1);
-        Map<String,ItemStack> output=RecipeEnergyInjectorManagerImpl.INSTANCE.getResult(itemstack);
-        double chance=RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
-        ItemStack output1=output.get("output1");
-        ItemStack trashitem=output.get("output2");
-        if(recipeEnergyInjectorManager.isRightItem(itemstack)) {
-           if(Runtime>=getTotalProductTick()) {
-               itemstack.setCount(itemstack.getCount()-1);
-               double trash = Math.random();
-               if (trash <=chance) {
-                   OutputInventory.insertItem(0,output1, false);
-               } else {
-                   Trash.insertItem(0, trashitem, false);
-               }
-               Runtime = 0;
-               markDirty();
+        Map<String, ItemStack> output = RecipeEnergyInjectorManagerImpl.INSTANCE.getResult(itemstack);
+        double chance = RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
+        ItemStack output1 = output.get("output1");
+        ItemStack trashitem = output.get("output2");
+        if (recipeEnergyInjectorManager.isRightItem(itemstack)) {
+            double requiredEnergyPerTick = this.getRequiredEnergyPerTick();
+            if (this.receivedEnergyUnit >= requiredEnergyPerTick) {
+                world.setBlockState(pos,world.getBlockState(pos).withProperty(InfiniaddonsProps.ACTIVE,true));
+                if (Runtime >= getTotalProductTick()) {
+                    itemstack.setCount(itemstack.getCount() - 1);
+                    double trash = Math.random();
+                    if (trash <= chance) {
+                        OutputInventory.insertItem(0, output1, false);
+                    } else {
+                        Trash.insertItem(0, trashitem, false);
+                    }
+                    markDirty();
 
-           }
-            Runtime++;
-        }
-        else {
-            Runtime=0;
-            markDirty();
+                }
+                Runtime++;
+            } else {
+                Runtime = 0;
+                markDirty();
+            }
         }
     }
-
     @Override
     protected void onWorkStopped() {Runtime=0;
     }
@@ -128,7 +130,7 @@ public class TileEnergyInjector extends TileMachineBase {
     }
     @Override
     public double getDemandedEnergy() {
-        return Math.max(0,this.getEnergyCapacity()-this.recievedEnergyUnit);
+        return Math.max(0,this.getEnergyCapacity()-this.receivedEnergyUnit);
     }
 
     @Override
@@ -138,7 +140,7 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     public double injectEnergy(EnumFacing directionFrom, double amount, double voltage) {
-        this.recievedEnergyUnit += amount;
+        this.receivedEnergyUnit += amount;
         return 0;
     }
 

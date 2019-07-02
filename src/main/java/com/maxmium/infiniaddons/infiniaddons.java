@@ -35,7 +35,7 @@ public static CommonProxy proxy;
 
     public void preInit(FMLPreInitializationEvent event)
     {
-    proxy.preInit();
+    proxy.preInit(event);
         RecipeHandler.init();
         new ConfigLoader(event);
         new CreativeTabsLoader(event);

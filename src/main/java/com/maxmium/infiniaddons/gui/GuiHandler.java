@@ -1,6 +1,8 @@
 package com.maxmium.infiniaddons.gui;
 
+import com.maxmium.infiniaddons.client.gui.GuiCobbleGenerator;
 import com.maxmium.infiniaddons.client.gui.GuiEnergyInjectorContainer;
+import com.maxmium.infiniaddons.gui.container.CobblestoneGeneratorContainer;
 import com.maxmium.infiniaddons.gui.container.EnergyInjectorContainer;
 import com.maxmium.infiniaddons.infiniaddons;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +15,7 @@ import javax.annotation.Nullable;
 
 public class GuiHandler implements IGuiHandler {
     public static final int GUI_INJECTOR=1;
+    public static final int GUI_COBBLE=2;
     public GuiHandler(){
         NetworkRegistry.INSTANCE.registerGuiHandler(infiniaddons.instance, this);
     }
@@ -23,7 +26,9 @@ public class GuiHandler implements IGuiHandler {
         switch (ID){
             case GUI_INJECTOR:
                 return new EnergyInjectorContainer(player,world.getTileEntity(new BlockPos(x,y,z)));
-            default:
+            case  GUI_COBBLE:
+                return new CobblestoneGeneratorContainer(player,world.getTileEntity(new BlockPos(x,y,z)));
+                default:
                 return null;
         }
     }
@@ -34,7 +39,9 @@ public class GuiHandler implements IGuiHandler {
         switch (ID){
             case GUI_INJECTOR:
                 return new GuiEnergyInjectorContainer(new EnergyInjectorContainer(player, world.getTileEntity(new BlockPos(x, y, z))));
-            default:
+            case GUI_COBBLE:
+                return new GuiCobbleGenerator(new CobblestoneGeneratorContainer(player,world.getTileEntity(new BlockPos(x,y,z))));
+                default:
                 return null;
         }
     }

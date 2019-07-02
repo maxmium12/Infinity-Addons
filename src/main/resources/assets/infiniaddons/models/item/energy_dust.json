@@ -1,7 +1,7 @@
 {
   "parent": "builtin/generated",
   "textures": {
-    "layer0": "infiniaddons:items/itemEnergyDust"
+    "layer0": "infiniaddons:items/energy_dust"
   },
   "display": {
     "thirdperson": {

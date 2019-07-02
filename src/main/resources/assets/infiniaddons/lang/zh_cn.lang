@@ -1,0 +1,12 @@
+item.energyDust.name=能量粉末
+commands.getrecipelist.usage=/getrecipelist [玩家]  获取能量灌注器合成列表(debug用)
+commands.getrecipelist.success=%d
+itemGroup.infinity addons=无限拓展
+item.energySword.name=能量剑
+item.energySword.fail=剑尚未冷却完毕
+item.energySword.update=已更新完成
+death.attack.truth=%s 因为没钱死了
+item.endestSword.name=终末之刃
+container.infiniaddons.cobblestonegenerator=圆石制造机
+tile.energyinjector.name=能量注入器
+tile.cobblestoneGenerator=圆石制造机

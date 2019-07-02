@@ -1,0 +1,12 @@
+item.energyDust.name=Energy Dust
+commands.getrecipelist.usage=/getrecipelist {Player} Get Energy Injector Recipes(For debug)
+commands.getrecipelist.success=%d
+itemGroup.infinity addons=Infinity Addons
+item.energySword.name=Energy Sword
+item.energySword.fail=Sword hasn't Cooldown
+item.energySword.update=Sword update success
+death.attack.truth=%s dead because of poor
+item.endestSword.name=Endest Sword
+container.infiniaddons.cobblestonegenerator=Cobblestone Generator
+tile.energyinjector.name=Energy Injector
+tile.cobblestoneGenerator=Cobblestone Generator

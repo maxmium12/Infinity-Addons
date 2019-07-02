@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public  class CommonProxy {
-    public void preInit() {
+    public void preInit(FMLPreInitializationEvent evt) {
         ModItems.init();
         ModBlocks.init();
         new GuiHandler();

@@ -1,7 +1,10 @@
 package com.maxmium.infiniaddons;
 
 import com.maxmium.infiniaddons.api.IModelRegister;
+import com.maxmium.infiniaddons.item.ItemElectronicBall;
+import com.maxmium.infiniaddons.item.ItemEndestSword;
 import com.maxmium.infiniaddons.item.ItemEnergyDust;
+import com.maxmium.infiniaddons.item.ItemEnergySword;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,11 +20,22 @@ import static com.maxmium.infiniaddons.infiniaddons.proxy;
 
 public class ModItems {
     public static ItemEnergyDust itemEnergyDust;
-
+    public static ItemEnergySword itemEnergySword;
+    public static ItemElectronicBall itemElectronicBall;
+    public static ItemEndestSword itemEndestSword;
     public static void init() {
         itemEnergyDust = new ItemEnergyDust();
         itemEnergyDust.setRegistryName("energy_dust");
         registerItem(itemEnergyDust);
+        itemEnergySword=new ItemEnergySword();
+        itemEnergySword.setRegistryName("energy_sword");
+        registerItem(itemEnergySword);
+        itemElectronicBall=new ItemElectronicBall();
+        itemElectronicBall.setRegistryName("electronic_ball");
+        registerItem(itemElectronicBall);
+        itemEndestSword=new ItemEndestSword();
+        registerItem(itemEndestSword);
+
 
     }
 
@@ -38,6 +52,8 @@ public class ModItems {
     public static void registerRenders()
     {
         registerRender(itemEnergyDust);
+        registerRender(itemEnergySword);
+        registerRender(itemElectronicBall);
     }
 
     @SideOnly(Side.CLIENT)

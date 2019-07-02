@@ -1,0 +1,9 @@
+{
+  "infiniaddons.electric": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "electric"
+      }]
+  }
+}

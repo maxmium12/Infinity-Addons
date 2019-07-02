@@ -8,12 +8,16 @@ import moze_intel.projecte.gameObjs.container.TransmutationContainer;
 import moze_intel.projecte.gameObjs.container.inventory.TransmutationInventory;
 import moze_intel.projecte.gameObjs.gui.GUITransmutation;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
         import net.minecraft.item.ItemStack;
-        import net.minecraft.util.EnumFacing;
+import net.minecraft.item.ItemTool;
+import net.minecraft.util.EnumFacing;
         import net.minecraft.util.EnumHand;
-        import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
         import net.minecraftforge.fml.common.Loader;
         import net.minecraftforge.fml.common.Mod;
         import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -61,6 +65,13 @@ public class EventHandler {
                 //ProjectE Repair Event
 
             }
+        }
+    }
+    @SubscribeEvent
+    public void onPlayerAttackEntity(AttackEntityEvent evt){
+        Entity entity=evt.getTarget();
+        if(entity instanceof EntityPlayer){
+            if(evt.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemTool);
         }
     }
 }

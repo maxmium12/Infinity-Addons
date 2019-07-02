@@ -15,12 +15,12 @@ public class RecipeEnergyInjectorManagerImpl extends RecipeEnergyInjectorManager
         this.recipes.add(new Recipe(input, output1, output2, energy, chance));
     }
     public Recipe findRecipe(ItemStack in){
-        for (Recipe recipe : recipes) {
+        for (int i=0;i<=recipes.size();i++) {
             try {
-                if (recipe.input.isItemEqual(in)) {
-                    return recipe;
+                if (recipes.get(i).input.isItemEqual(in)) {
+                    return recipes.get(i);
                 }
-            } catch (NullPointerException | IllegalArgumentException e) {
+            } catch (NullPointerException | IllegalArgumentException | IndexOutOfBoundsException e) {
                 //skip recipe
             }
         }

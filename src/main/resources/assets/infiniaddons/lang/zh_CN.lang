@@ -1,4 +1,0 @@
-item.energyDust.name=能量粉末
-commands.getrecipelist.usage=/getrecipelist [玩家]  获取能量灌注器合成列表(debug用)
-commands.getrecipelist.success=%d
-itemGroup.infinity addons=无限拓展
