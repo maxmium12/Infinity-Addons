@@ -5,6 +5,7 @@ import com.maxmium.infiniaddons.ModItems;
 import com.maxmium.infiniaddons.api.IModelRegister;
 import com.maxmium.infiniaddons.command.CommandHandler;
 import com.maxmium.infiniaddons.entity.EntityLoader;
+import com.maxmium.infiniaddons.events.EventHandler;
 import com.maxmium.infiniaddons.gui.GuiHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -15,6 +16,7 @@ public  class CommonProxy {
         ModBlocks.init();
         new GuiHandler();
         new EntityLoader();
+        new EventHandler();
     }
 
     public void serverStarting(FMLServerStartingEvent evt) {

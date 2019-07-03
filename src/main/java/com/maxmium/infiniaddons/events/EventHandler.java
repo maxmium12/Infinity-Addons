@@ -16,12 +16,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.EnumFacing;
         import net.minecraft.util.EnumHand;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
-        import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.Loader;
         import net.minecraftforge.fml.common.Mod;
         import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-        import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import net.minecraftforge.items.IItemHandlerModifiable;
         import net.minecraftforge.items.ItemStackHandler;
         import net.minecraftforge.items.wrapper.CombinedInvWrapper;
         import scala.Array;
@@ -31,47 +35,23 @@ import net.minecraftforge.event.entity.player.PlayerContainerEvent;
         import java.util.List;
 @Mod.EventBusSubscriber(modid=infiniaddons.MODID)
 public class EventHandler {
-    @SubscribeEvent
-    public void onPlayerOpenContainer(PlayerContainerEvent.Open evt) {
-        if (Loader.isModLoaded("projecte")) {
-            EntityPlayer player = evt.getEntityPlayer();
-            InventoryPlayer playerivt = new InventoryPlayer(player);
-            if (player.isServerWorld()) {
-                //判断是否是转化桌Container
-                TransmutationContainer container = new TransmutationContainer(playerivt, new TransmutationInventory(player), EnumHand.MAIN_HAND);
-                if (evt.getContainer().equals(container)) {
-                    ThreadTimer threadTimer = new ThreadTimer(player);
-                    threadTimer.setRunnable(true);
-                    threadTimer.run();
-                }
-            }
-        }
-
-
+    public EventHandler(){
+        MinecraftForge.EVENT_BUS.register(this);
     }
-
     @SubscribeEvent
-    public void onPlayerCloseContainer(PlayerContainerEvent.Close evt) {
+    public static void onPlayerConnect(PlayerEvent.PlayerLoggedInEvent evt){
         if (Loader.isModLoaded("projecte")) {
-            EntityPlayer player = evt.getEntityPlayer();
+            EntityPlayer player = evt.player;
             InventoryPlayer playerivt = new InventoryPlayer(player);
             if (player.isServerWorld()) {
-                //判断是否是转化桌Container
-                TransmutationContainer container = new TransmutationContainer(playerivt, new TransmutationInventory(player), EnumHand.MAIN_HAND);
-                if (evt.getContainer().equals(container)) {
-                    ThreadTimer threadTimer = new ThreadTimer(player);
-                    threadTimer.setRunnable(false);
-                }
-                //ProjectE Repair Event
-
+                ThreadTimer threadTimer = new ThreadTimer(player,"timer");
+                threadTimer.start();
             }
         }
     }
+
     @SubscribeEvent
-    public void onPlayerAttackEntity(AttackEntityEvent evt){
-        Entity entity=evt.getTarget();
-        if(entity instanceof EntityPlayer){
-            if(evt.getEntityPlayer().getHeldItemMainhand().getItem() instanceof ItemTool);
-        }
+    public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent evt) {
+        FMLLog.getLogger().info(new String(evt.getPacket().payload().array()));
     }
 }

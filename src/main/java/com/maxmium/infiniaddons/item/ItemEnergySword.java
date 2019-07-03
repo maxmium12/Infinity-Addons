@@ -45,6 +45,11 @@ public class ItemEnergySword extends ItemSword {
         stack.damageItem(1,attacker);
         return true;
     }
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        return 20;
+    }
 
 }
 

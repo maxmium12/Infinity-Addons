@@ -6,11 +6,14 @@ import com.maxmium.infiniaddons.common.ConfigLoader;
 import com.maxmium.infiniaddons.crafting.RecipeHandler;
 import com.maxmium.infiniaddons.creativetab.CreativeTabsLoader;
 import de.ellpeck.actuallyadditions.mod.creative.CreativeTab;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -39,6 +42,15 @@ public static CommonProxy proxy;
         RecipeHandler.init();
         new ConfigLoader(event);
         new CreativeTabsLoader(event);
+        if(Loader.isModLoaded("crafttweaker")){
+            try {
+                Class.forName("com.maxmium.infiniaddons.crafttweaker.CrafttweakerPlugin").getMethod("init").invoke(null);
+            }
+            catch (Exception e)
+            {
+                throw new ReportedException(new CrashReport("Error initializing minetweaker integration", e));
+            }
+        }
     }
 
     @Mod.EventHandler
