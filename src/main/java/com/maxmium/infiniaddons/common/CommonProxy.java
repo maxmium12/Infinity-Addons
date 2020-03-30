@@ -3,6 +3,7 @@ package com.maxmium.infiniaddons.common;
 import com.maxmium.infiniaddons.ModBlocks;
 import com.maxmium.infiniaddons.ModItems;
 import com.maxmium.infiniaddons.api.IModelRegister;
+import com.maxmium.infiniaddons.capability.CapabilityHandler;
 import com.maxmium.infiniaddons.command.CommandHandler;
 import com.maxmium.infiniaddons.entity.EntityLoader;
 import com.maxmium.infiniaddons.events.EventHandler;
@@ -17,6 +18,7 @@ public  class CommonProxy {
         new GuiHandler();
         new EntityLoader();
         new EventHandler();
+        new CapabilityHandler();
     }
 
     public void serverStarting(FMLServerStartingEvent evt) {

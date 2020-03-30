@@ -48,7 +48,7 @@ public class ItemEnergySword extends ItemSword {
     @Override
     public int getMaxItemUseDuration(ItemStack stack)
     {
-        return 20;
+        return 60;
     }
 
 }

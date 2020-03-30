@@ -53,7 +53,7 @@ public class ItemEndestSword extends ItemSword {
             if(!player.world.isRemote&&entity instanceof EntityLiving&&!entity.isDead){
                 entity.attackEntityFrom(new DamageSource("truth").setDamageIsAbsolute().setDamageBypassesArmor().setDamageAllowedInCreativeMode(),(((EntityLiving) entity).getHealth()));
                 if(!entity.isDead) {
-                    entity.attackEntityFrom(new DamageSource("truth").setDamageBypassesArmor().setDamageIsAbsolute().setDamageAllowedInCreativeMode(), 2147483647F);
+                    entity.attackEntityFrom(new DamageSource("truth").setDamageBypassesArmor().setDamageIsAbsolute().setDamageAllowedInCreativeMode(), Float.MAX_VALUE);
                 }
                 if(!entity.isDead){
                     ((EntityLiving) entity).onDeath(new DamageSource("truth").setDamageBypassesArmor().setDamageIsAbsolute());

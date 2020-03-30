@@ -82,8 +82,7 @@ public class TileEnergyInjector extends TileMachineBase {
 
     @Override
     protected void doWork() {
-        ItemStack itemstack1 = InputInventory.getStackInSlot(0);
-        ItemStack itemstack=itemstack1.copy();
+        ItemStack itemstack=InputInventory.extractItem(0,1,true);
         Map<String, ItemStack> output = RecipeEnergyInjectorManagerImpl.INSTANCE.getResult(itemstack);
         double chance = RecipeEnergyInjectorManagerImpl.INSTANCE.getChance(itemstack);
         ItemStack output1 = output.get("output1");
@@ -93,7 +92,7 @@ public class TileEnergyInjector extends TileMachineBase {
             if (this.receivedEnergyUnit >= requiredEnergyPerTick) {
                 world.setBlockState(pos,world.getBlockState(pos).withProperty(InfiniaddonsProps.ACTIVE,true));
                 if (Runtime >= getTotalProductTick()) {
-                    itemstack1.setCount(itemstack1.getCount() - 1);
+                    itemstack.setCount(itemstack.getCount() - 1);
                     double trash = Math.random();
                     if (trash <= chance) {
                         OutputInventory.insertItem(0, output1, false);

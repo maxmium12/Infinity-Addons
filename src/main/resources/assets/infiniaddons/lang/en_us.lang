@@ -10,3 +10,4 @@ item.endestSword.name=Endest Sword
 container.infiniaddons.cobblestonegenerator=Cobblestone Generator
 tile.energyinjector.name=Energy Injector
 tile.cobblestoneGenerator=Cobblestone Generator
+block.areablock.success=Get chunk success

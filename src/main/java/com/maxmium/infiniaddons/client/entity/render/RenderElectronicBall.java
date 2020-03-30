@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 public class RenderElectronicBall extends RenderSnowball<EntityElectronicBall> {
     public RenderElectronicBall(RenderManager renderManagerIn) {
         super(renderManagerIn, new ItemElectronicBall(), Minecraft.getMinecraft().getRenderItem());
+
     }
 
 }

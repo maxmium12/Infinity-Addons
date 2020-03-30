@@ -1,7 +1,9 @@
 package com.maxmium.infiniaddons;
 
+import com.maxmium.infiniaddons.Block.BlockAreaBlock;
 import com.maxmium.infiniaddons.Block.BlockCobblestoneGenerator;
 import com.maxmium.infiniaddons.Block.BlockEnergyInjector;
+import com.maxmium.infiniaddons.Tile.TileAreaBlock;
 import com.maxmium.infiniaddons.Tile.TileCobblestoneGenerator;
 import com.maxmium.infiniaddons.Tile.TileEnergyInjector;
 import com.maxmium.infiniaddons.api.IModelRegister;
@@ -28,6 +30,7 @@ import static com.maxmium.infiniaddons.infiniaddons.proxy;
 public class ModBlocks{
     public static BlockEnergyInjector blockEnergyInjector=new BlockEnergyInjector();
     public static BlockCobblestoneGenerator blockCobblestoneGenerator=new BlockCobblestoneGenerator();
+    public static BlockAreaBlock blockAreaBlock=new BlockAreaBlock();
 
     public static void init() {
         blockEnergyInjector=registerBlock(new BlockEnergyInjector());
@@ -36,6 +39,9 @@ public class ModBlocks{
         blockCobblestoneGenerator=registerBlock(new BlockCobblestoneGenerator());
         registerItemBlock(blockCobblestoneGenerator);
         GameRegistry.registerTileEntity(TileCobblestoneGenerator.class,"cobblestone_generator");
+        registerBlock(blockAreaBlock);
+        registerItemBlock(blockAreaBlock);
+        GameRegistry.registerTileEntity(TileAreaBlock.class,"area_block");
 
     }
 
@@ -54,11 +60,37 @@ public class ModBlocks{
         registerCallback.accept(registryObject);
         return registryObject;
     }
+    @SideOnly(Side.CLIENT)
+    public static void registerRenders()
+    {
+        registerStateMapper(blockEnergyInjector,new StateMap.Builder().withSuffix("_injector").build());
+        registerRender(blockEnergyInjector);
+        registerRender(blockCobblestoneGenerator,0,"energy_injector");
+    }
+
     public static ItemBlock registerItemBlock(Block block) {
         ItemBlock itemBlock = new ItemBlock(block);
         registerItem(itemBlock.setRegistryName(block.getRegistryName()));
         return itemBlock;
     }
-
+    @SideOnly(Side.CLIENT)
+    private static void registerRender(Block block)
+    {
+        ModelResourceLocation model = new ModelResourceLocation(block.getRegistryName(), "inventory");
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, model);
+    }
+    @SideOnly(Side.CLIENT)
+    private static void registerStateMapper(Block block, IStateMapper mapper)
+    {
+        ModelLoader.setCustomStateMapper(block, mapper);
+    }
+    @SideOnly(Side.CLIENT)
+    private static void registerRender(Block block, int meta, String name)
+    {
+        ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, model);
+    }
 }
+
+
 

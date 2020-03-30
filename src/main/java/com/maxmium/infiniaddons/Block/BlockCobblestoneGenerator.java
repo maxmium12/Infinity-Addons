@@ -36,40 +36,12 @@ public class BlockCobblestoneGenerator extends BlockContainer {
         setResistance(100F);
         setSoundType(SoundType.STONE);
         setCreativeTab(CreativeTabsLoader.tabInfiniaddons);
-        setDefaultState(this.blockState.getBaseState().withProperty(HORIZONAL_FACING, EnumFacing.NORTH).withProperty(ACTIVE,false));
         setUnlocalizedName("cobblestoneGenerator");
         setRegistryName("cobblestone_generator");
     }
     @Override
-    protected BlockStateContainer createBlockState() {
-
-        return new BlockStateContainer(this, HORIZONAL_FACING, ACTIVE);
-    }
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return 0;
-    }
-    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
-    }
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack stack) {
-        TileEntity te = world.getTileEntity(pos);
-        if (te instanceof TileCobblestoneGenerator) {
-            TileCobblestoneGenerator machine = (TileCobblestoneGenerator) te;
-            machine.setFacing(RotationUtils.getPlacedRotationHorizontal(player));
-        }
-    }
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te instanceof TileMachineBase) {
-            TileMachineBase machineBase = (TileMachineBase) te;
-            state = state.withProperty(HORIZONAL_FACING, machineBase.getFacing());
-            state = state.withProperty(ACTIVE, machineBase.isActive());
-        }
-        return super.getActualState(state, worldIn, pos);
     }
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)

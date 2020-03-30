@@ -41,9 +41,6 @@ public class CrafttweakerPlugin {
                 ConfigLoader.logger().error("Required parameters missing for recipe");
                 return;
             }
-            if(input instanceof IOreDictEntry){
-                RecipeEnergyInjectorManagerImpl.INSTANCE.addRecipe(((IOreDictEntry) input).getName(), CraftTweakerMC.getItemStack(output1),CraftTweakerMC.getItemStack(output2),energy,chance);
-            }
             else RecipeEnergyInjectorManagerImpl.INSTANCE.addRecipe(toStack(input), CraftTweakerMC.getItemStack(output1),CraftTweakerMC.getItemStack(output2),energy,chance);
 
         }

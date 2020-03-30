@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "infiniaddons:cobblestone_generator" }
+  }
+}

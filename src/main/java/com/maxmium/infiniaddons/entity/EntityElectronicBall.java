@@ -27,20 +27,20 @@ public class EntityElectronicBall extends EntityThrowable {
         super(worldIn, x, y, z);
     }
     @Override
+    protected float getGravityVelocity()
+    {
+        return 0F;
+    }
+    @Override
     protected void onImpact(RayTraceResult result) {
         if(!this.world.isRemote){
-            double x=result.getBlockPos().getX();
-            double y=result.getBlockPos().getY();
-            double z=result.getBlockPos().getZ();
-            try{
+            double x=result.hitVec.x;
+            double y=result.hitVec.y;
+            double z=result.hitVec.z;
             List<EntityLiving> entitylist=world.getEntitiesWithinAABB(EntityLiving.class,new AxisAlignedBB(x+3d,y+3d,z+3d,x-3d,y-3d,z-3d));
-            for(EntityLiving entity:entitylist){
-                entity.attackEntityFrom(new DamageSource("electric").setDamageBypassesArmor().setDamageIsAbsolute(),130f);
-            }
-            }
-            catch (IndexOutOfBoundsException e){
-
-            }
+            for(EntityLiving entity:entitylist) {
+                entity.attackEntityFrom(new DamageSource("electric").setDamageBypassesArmor().setDamageIsAbsolute(), 130f);
         }
     }
+}
 }

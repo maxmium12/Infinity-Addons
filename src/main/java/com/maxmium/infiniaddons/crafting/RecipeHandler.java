@@ -18,12 +18,12 @@ public class RecipeHandler {
         private ItemResource itemResource=new ItemResource(Avaritia.tab,"resource");
         public EnergyInjectorRecipes(){
             RecipeEnergyInjectorManagerImpl.INSTANCE.addRecipe(
-                    "ingotCosmicNeutronium"
+                    new ItemStack(itemResource,1,4)
                     ,new ItemStack(new ItemEnergyDust())
                     ,new ItemStack(Blocks.DIRT),24576000,
                     0.5);
             RecipeEnergyInjectorManagerImpl.INSTANCE.addRecipe(
-                    "ingotIron",new ItemStack(Items.ENDER_PEARL),
+                    new ItemStack(Items.IRON_INGOT),new ItemStack(Items.ENDER_PEARL),
                     new ItemStack(Blocks.DIRT),65536,0.7);
 
         }

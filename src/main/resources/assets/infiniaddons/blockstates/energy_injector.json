@@ -9,6 +9,9 @@
   "variants": {
     "type": {
       "energy_injector": {
+        "inventory": [{
+          "textures": { "front": "infiniaddons:blocks/energy_injector_front" }
+        }],
         "active": {
           "true": {
             "textures":{ "front":"infiniaddons:blocks/energy_injector_front_on"}
