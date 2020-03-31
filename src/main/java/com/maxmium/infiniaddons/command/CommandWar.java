@@ -8,36 +8,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.server.command.CommandTreeBase;
 
 public class CommandWar extends CommandTreeBase {
-    public CommandWar(){
-        this.addSubcommand(new CommandBase() {
-            @Override
-            public String getName() {
-                return "start";
-            }
-
-            @Override
-            public String getUsage(ICommandSender sender) {
-                return "/war start 开始一次战争";
-            }
-
-            @Override
-            public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-                EnumFacing facing=sender.getCommandSenderEntity().getHorizontalFacing();
-                switch (facing){
-                    case NORTH:
-
-                }
-            }
-        });
+    public CommandWar() {
+        this.addSubcommand(new WarSubStart());
     }
-
     @Override
     public String getName() {
-        return null;
+        return "war";
     }
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return null;
+        return "/war";
     }
 }

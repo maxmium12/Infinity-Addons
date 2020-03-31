@@ -1,6 +1,9 @@
 package com.maxmium.infiniaddons;
 
 import codechicken.lib.gui.SimpleCreativeTab;
+import com.feed_the_beast.ftblib.lib.data.ForgePlayer;
+import com.feed_the_beast.ftblib.lib.data.Universe;
+import com.maxmium.infiniaddons.command.war.WarFakePlayer;
 import com.maxmium.infiniaddons.common.CommonProxy;
 import com.maxmium.infiniaddons.common.ConfigLoader;
 import com.maxmium.infiniaddons.crafting.RecipeHandler;
@@ -23,6 +26,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import java.util.UUID;
 
 
 @Mod(modid = infiniaddons.MODID, name = infiniaddons.NAME, version = infiniaddons.VERSION, acceptedMinecraftVersions = "1.12.2",dependencies = "required-after:avaritia@[3.3.0]")

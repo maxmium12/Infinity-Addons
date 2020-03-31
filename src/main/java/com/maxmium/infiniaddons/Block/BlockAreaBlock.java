@@ -14,7 +14,10 @@ import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksModify;
 import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksRequest;
 import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksUpdate;
 import com.maxmium.infiniaddons.Tile.TileAreaBlock;
+import com.maxmium.infiniaddons.capability.CapabilityHandler;
+import com.maxmium.infiniaddons.capability.ICapabilityWar;
 import com.maxmium.infiniaddons.creativetab.CreativeTabsLoader;
+import com.maxmium.infiniaddons.world.WorldAreaBlockPosition;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -57,6 +60,15 @@ public class BlockAreaBlock extends BlockContainer {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
+            Boolean iswar=false;
+            if(playerIn.hasCapability(CapabilityHandler.capabilityWar,null)){
+                ICapabilityWar war=playerIn.getCapability(CapabilityHandler.capabilityWar,null);
+                iswar=war.isWar();
+            }
+            if(iswar){
+                playerIn.sendMessage(new TextComponentTranslation("block.areablock.war"));
+                return false;
+            }
             TileAreaBlock te = (TileAreaBlock) worldIn.getTileEntity(pos);
             te.setAll(pos, playerIn.getEntityWorld().provider.getDimension(), playerIn.getUniqueID(), playerIn.getName());
             ClaimResult result = ClaimedChunks.instance.claimChunk(Universe.get().getPlayer(playerIn.getUniqueID()),new ChunkDimPos(pos, worldIn.provider.getDimension()));
@@ -73,7 +85,14 @@ public class BlockAreaBlock extends BlockContainer {
             } else {
                 playerIn.sendMessage(new TextComponentTranslation("block.areablock.no_power"));
             }
-
+            WorldAreaBlockPosition position=WorldAreaBlockPosition.get(worldIn);
+            for(ChunkDimPos dimPos:position.getChunkDimPoses()){
+                if(dimPos.equals(new ChunkDimPos(pos, worldIn.provider.getDimension()))){
+                    new MessageClaimedChunksUpdate(MathUtils.chunk(pos.getX()) - 7, MathUtils.chunk(pos.getZ()) - 7, playerIn).sendTo((EntityPlayerMP) playerIn);
+                    return true;
+                }
+            }
+            position.add(pos,new ChunkDimPos(pos, worldIn.provider.getDimension()));
             new MessageClaimedChunksUpdate(MathUtils.chunk(pos.getX()) - 7, MathUtils.chunk(pos.getZ()) - 7, playerIn).sendTo((EntityPlayerMP) playerIn);
         }
         return true;
@@ -87,6 +106,8 @@ public class BlockAreaBlock extends BlockContainer {
         if(!worldIn.isRemote) {
             TileAreaBlock te = (TileAreaBlock) worldIn.getTileEntity(pos);
             ClaimedChunks.instance.unclaimChunk(Universe.get().getPlayer(te.getUuid()),new ChunkDimPos(pos, worldIn.provider.getDimension()));
+        WorldAreaBlockPosition position=WorldAreaBlockPosition.get(worldIn);
+        position.removeElement(pos,new ChunkDimPos(pos,worldIn.provider.getDimension()));
         }
         super.breakBlock(worldIn, pos, state);
     }

@@ -19,6 +19,8 @@ public static class Storage implements Capability.IStorage<ICapabilityWar>{
         NBTTagCompound compound = new NBTTagCompound();
         compound.setBoolean("war", instance.isWar());
         compound.setInteger("deadtimes", instance.getDeadtimes());
+        compound.setLong("warendtime",instance.getWarEndTime());
+        compound.setBoolean("isunablewar",instance.isUnableWar());
         return compound;
     }
 
@@ -27,11 +29,15 @@ public static class Storage implements Capability.IStorage<ICapabilityWar>{
         NBTTagCompound compound = (NBTTagCompound) nbt;
         instance.setWar(compound.getBoolean("war"));
         instance.setDeadtimes(compound.getInteger("deadtimes"));
+        instance.setUnableWar(compound.getBoolean("isunablewar"));
+        instance.setWarEndTime(compound.getLong("warendtime"));
     }
 }
     public static class Implementation implements ICapabilityWar{
         private boolean war;
         private int deadtimes;
+        private long warendtime;
+        private boolean unablewar;
 
         @Override
         public boolean isWar() {
@@ -51,6 +57,26 @@ public static class Storage implements Capability.IStorage<ICapabilityWar>{
         @Override
         public void setDeadtimes(int deadtimes) {
             this.deadtimes=deadtimes;
+        }
+
+        @Override
+        public long getWarEndTime() {
+            return warendtime;
+        }
+
+        @Override
+        public boolean isUnableWar() {
+            return unablewar;
+        }
+
+        @Override
+        public void setUnableWar(boolean war) {
+            unablewar=war;
+        }
+
+        @Override
+        public void setWarEndTime(long time) {
+            warendtime=time;
         }
     }
     public static class ProviderPlayer implements ICapabilitySerializable<NBTTagCompound> {

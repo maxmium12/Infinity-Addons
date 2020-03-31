@@ -7,5 +7,6 @@ public class CommandHandler {
     public CommandHandler(FMLServerStartingEvent event){
         event.registerServerCommand(new CommandRecipes());
         event.registerServerCommand(new CommandDebug());
+        event.registerServerCommand(new CommandWar());
     }
 }

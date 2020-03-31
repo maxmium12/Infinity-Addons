@@ -4,6 +4,7 @@ import com.feed_the_beast.ftblib.lib.math.ChunkDimPos;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.*;
@@ -22,6 +23,13 @@ public class WorldAreaBlockPosition extends WorldSavedData {
         this.chunkDimPos.add(chunkDimPos);
         this.pos.add(pos);
         this.markDirty();
+    }
+    public List<ChunkDimPos> getChunkDimPoses(){
+        return chunkDimPos;
+    }
+    public void removeElement(BlockPos pos,ChunkDimPos dimPos){
+        chunkDimPos.remove(dimPos);
+        this.pos.remove(pos);
     }
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
@@ -55,5 +63,21 @@ public class WorldAreaBlockPosition extends WorldSavedData {
         }
         nbt.setTag("areaBlock_positions",list);
         return nbt;
+    }
+    public static WorldAreaBlockPosition get(World world){
+        WorldSavedData data=world.getPerWorldStorage().getOrLoadData(WorldAreaBlockPosition.class,"AreaBlockPosition");
+        if(data==null){
+            data=new WorldAreaBlockPosition("AreaBlockPosition");
+            world.getMapStorage().setData("AreaBlockPosition",data);
+        }
+        return (WorldAreaBlockPosition)data;
+    }
+    public static WorldAreaBlockPosition getGlobal(World world){
+        WorldSavedData data=world.getMapStorage().getOrLoadData(WorldAreaBlockPosition.class,"AreaBlockPosition");
+        if(data==null){
+            data=new WorldAreaBlockPosition("AreaBlockPosition");
+            world.getMapStorage().setData("AreaBlockPosition",data);
+        }
+        return (WorldAreaBlockPosition)data;
     }
 }
