@@ -3,7 +3,6 @@ package com.maxmium.infiniaddons;
 import codechicken.lib.gui.SimpleCreativeTab;
 import com.feed_the_beast.ftblib.lib.data.ForgePlayer;
 import com.feed_the_beast.ftblib.lib.data.Universe;
-import com.maxmium.infiniaddons.command.war.WarFakePlayer;
 import com.maxmium.infiniaddons.common.CommonProxy;
 import com.maxmium.infiniaddons.common.ConfigLoader;
 import com.maxmium.infiniaddons.crafting.RecipeHandler;

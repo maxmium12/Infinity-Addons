@@ -12,14 +12,15 @@ import java.util.*;
 public class WorldAreaBlockPosition extends WorldSavedData {
     private List<ChunkDimPos>chunkDimPos=new ArrayList<ChunkDimPos>();
     private List<BlockPos>pos=new ArrayList<BlockPos>();
-
+    private Map<ChunkDimPos,BlockPos> areaBlockPos=new HashMap<>();
     public WorldAreaBlockPosition(String name) {
         super(name);
     }
     public int size(){
         return chunkDimPos.size();
     }
-    public void add(BlockPos pos,ChunkDimPos chunkDimPos){
+    public void add(ChunkDimPos chunkDimPos,BlockPos pos){
+        areaBlockPos.put(chunkDimPos, pos);
         this.chunkDimPos.add(chunkDimPos);
         this.pos.add(pos);
         this.markDirty();
@@ -30,6 +31,12 @@ public class WorldAreaBlockPosition extends WorldSavedData {
     public void removeElement(BlockPos pos,ChunkDimPos dimPos){
         chunkDimPos.remove(dimPos);
         this.pos.remove(pos);
+    }
+    public List<BlockPos> getPoses(){
+        return pos;
+    }
+    public Map<ChunkDimPos,BlockPos> getAreaBlockPos(){
+        return areaBlockPos;
     }
     @Override
     public void readFromNBT(NBTTagCompound nbt) {

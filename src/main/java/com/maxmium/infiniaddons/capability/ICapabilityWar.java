@@ -9,4 +9,6 @@ public interface ICapabilityWar {
     boolean isUnableWar();
     void setUnableWar(boolean war);
     void setWarEndTime(long time);
+    void setDefence(boolean defence);
+    boolean isDefence();
 }

@@ -10,17 +10,19 @@ import com.feed_the_beast.ftbutilities.data.ClaimedChunk;
 import com.feed_the_beast.ftbutilities.data.ClaimedChunks;
 import com.maxmium.infiniaddons.capability.CapabilityHandler;
 import com.maxmium.infiniaddons.capability.ICapabilityWar;
-import com.maxmium.infiniaddons.command.war.WarFakePlayer;
+import com.maxmium.infiniaddons.command.war.WarUtils;
+import com.maxmium.infiniaddons.utils.CommonUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.UUID;
+import java.util.*;
 
 public class WarSubStart extends CommandBase {
     @Override
@@ -40,7 +42,6 @@ public class WarSubStart extends CommandBase {
             if(sender.getEntityWorld().getTotalWorldTime()-capabilityWar.getWarEndTime()<=36000){
                 throw new CommandException(new TextComponentTranslation("war.infiniaddons.cooling_down").toString());
             }
-            new WarFakePlayer();
             EnumFacing facing = sender.getCommandSenderEntity().getHorizontalFacing();
             ForgePlayer player = Universe.get().getPlayer(sender);
             ChunkDimPos Pos = new ChunkDimPos(sender.getCommandSenderEntity());
@@ -51,37 +52,52 @@ public class WarSubStart extends CommandBase {
             switch (facing) {
                 case NORTH:
                     chunkDimPos = new ChunkDimPos(x, z - 1, dim);
+                    break;
                 case SOUTH:
                     chunkDimPos = new ChunkDimPos(x, z + 1, dim);
+                    break;
                 case EAST:
                     chunkDimPos = new ChunkDimPos(x + 1, z, dim);
+                    break;
                 case WEST:
                     chunkDimPos = new ChunkDimPos(x - 1, z, dim);
+                    break;
             }
             if (ClaimedChunks.instance.getChunk(chunkDimPos) == null) {
                 throw new CommandException("command.war.no_team");
             }
+            List<EntityPlayerMP> playerList=ClaimedChunks.instance.getChunk(chunkDimPos).getTeam().getOnlineMembers();
             ClaimedChunk chunk = ClaimedChunks.instance.getChunk(chunkDimPos);
-            PlayerList list = server.getPlayerList();
-            ForgePlayer fakeplayer = Universe.get().getPlayer(UUID.fromString("19f51a77-b6fb-3469-a8b6-228ec5ce5961"));
-            ClaimedChunks.instance.unclaimChunk(chunk.getTeam().getOwner(), chunkDimPos);
-            ClaimedChunks.instance.claimChunk(fakeplayer, chunkDimPos);
-            ForgeTeam team = Universe.get().getTeam("WarChunk");
-            for (int i = 0; i <= player.team.getOnlineMembers().size(); i++) {
-                EntityPlayer player1 = player.team.getOnlineMembers().get(i);
-                if (player.team.getOnlineMembers().get(i).hasCapability(CapabilityHandler.capabilityWar, null)) {
+            ForgePlayer fakeplayer = Universe.get().fakePlayer;
+            if(fakeplayer==null){
+                throw new CommandException(new TextComponentTranslation("war.infiniaddons.debug").toString());
+            }
+            ArrayList<EntityPlayer> list = new ArrayList<>(playerList);
+            list.addAll(player.team.getOnlineMembers());
+            WarUtils.battlingteam.add(list);
+            WarUtils.map.put(list,chunkDimPos);
+            ForgeTeam team = fakeplayer.team;
+            for (EntityPlayer player1:player.team.getOnlineMembers()) {
+                if (player1.hasCapability(CapabilityHandler.capabilityWar, null)) {
                     ICapabilityWar war = player1.getCapability(CapabilityHandler.capabilityWar, null);
                     war.setWar(true);
+                    war.setUnableWar(false);
+                    CommonUtils.syncWarCapability((EntityPlayerMP) player1);
+                    war.setDefence(false);
                 }
                 ForgePlayer forgePlayer = Universe.get().getPlayer(player1.getUniqueID());
                 team.setStatus(forgePlayer, EnumTeamStatus.ALLY);
             }
-            for (int i = 0; i <= ClaimedChunks.instance.getChunk(chunkDimPos).getTeam().getOnlineMembers().size(); i++) {
-                EntityPlayer player1 = player.team.getOnlineMembers().get(i);
-                if (player.team.getOnlineMembers().get(i).hasCapability(CapabilityHandler.capabilityWar, null)) {
+            for (EntityPlayer player1:playerList) {
+                if (player1.hasCapability(CapabilityHandler.capabilityWar, null)) {
                     ICapabilityWar war = player1.getCapability(CapabilityHandler.capabilityWar, null);
                     war.setWar(true);
+                    war.setUnableWar(false);
+                    war.setDefence(true);
+                    CommonUtils.syncWarCapability((EntityPlayerMP)player1);
                 }
+                ClaimedChunks.instance.unclaimChunk(chunk.getTeam().getOwner(), chunkDimPos);
+                ClaimedChunks.instance.claimChunk(fakeplayer, chunkDimPos);
                 ForgePlayer forgePlayer = Universe.get().getPlayer(player1.getUniqueID());
                 team.setStatus(forgePlayer, EnumTeamStatus.ALLY);
             }

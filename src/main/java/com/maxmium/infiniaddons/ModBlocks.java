@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,9 +34,11 @@ public class ModBlocks{
     public static BlockAreaBlock blockAreaBlock=new BlockAreaBlock();
 
     public static void init() {
-        blockEnergyInjector=registerBlock(new BlockEnergyInjector());
-        registerItemBlock(blockEnergyInjector);
-        GameRegistry.registerTileEntity(TileEnergyInjector.class,"energy_injector");
+        if(Loader.isModLoaded("ic2")) {
+            blockEnergyInjector = registerBlock(new BlockEnergyInjector());
+            registerItemBlock(blockEnergyInjector);
+            GameRegistry.registerTileEntity(TileEnergyInjector.class, "energy_injector");
+        }
         blockCobblestoneGenerator=registerBlock(new BlockCobblestoneGenerator());
         registerItemBlock(blockCobblestoneGenerator);
         GameRegistry.registerTileEntity(TileCobblestoneGenerator.class,"cobblestone_generator");

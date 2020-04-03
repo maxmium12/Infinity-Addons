@@ -13,6 +13,7 @@ import com.feed_the_beast.ftbutilities.data.FTBUtilitiesTeamData;
 import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksModify;
 import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksRequest;
 import com.feed_the_beast.ftbutilities.net.MessageClaimedChunksUpdate;
+import com.feed_the_beast.ftbutilities.ranks.Ranks;
 import com.maxmium.infiniaddons.Tile.TileAreaBlock;
 import com.maxmium.infiniaddons.capability.CapabilityHandler;
 import com.maxmium.infiniaddons.capability.ICapabilityWar;
@@ -92,7 +93,8 @@ public class BlockAreaBlock extends BlockContainer {
                     return true;
                 }
             }
-            position.add(pos,new ChunkDimPos(pos, worldIn.provider.getDimension()));
+            ForgePlayer player=Universe.get().getPlayer(playerIn);
+            Ranks.INSTANCE.ranks.get("ftbutilities.claims.max_chunks").setPermission("ftbutilities.claims.max_chunks",player.getRankConfig("ftbutilities.claims.max_chunks").getInt()+1);
             new MessageClaimedChunksUpdate(MathUtils.chunk(pos.getX()) - 7, MathUtils.chunk(pos.getZ()) - 7, playerIn).sendTo((EntityPlayerMP) playerIn);
         }
         return true;
