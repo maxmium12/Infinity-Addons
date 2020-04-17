@@ -12,7 +12,9 @@ import com.feed_the_beast.ftbutilities.FTBUtilitiesNotifications;
 import com.feed_the_beast.ftbutilities.data.ClaimedChunks;
 import com.feed_the_beast.ftbutilities.data.FTBUtilitiesTeamData;
 import com.maxmium.infiniaddons.Block.BlockAreaBlock;
+import com.maxmium.infiniaddons.Block.BlockMineralMiner;
 import com.maxmium.infiniaddons.Tile.TileAreaBlock;
+import com.maxmium.infiniaddons.Tile.TileMineralMiner;
 import com.maxmium.infiniaddons.capability.CapabilityHandler;
 import com.maxmium.infiniaddons.capability.CapabilityWar;
 import com.maxmium.infiniaddons.capability.ICapabilityWar;
@@ -39,12 +41,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
         import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -88,6 +92,22 @@ public class EventHandler {
                 FTBUtilitiesNotifications.updateChunkMessage((EntityPlayerMP) event.getPlayer(), new ChunkDimPos(event.getPos(), event.getWorld().provider.getDimension()));
             }
 
+        }
+    }
+    @SubscribeEvent
+    public void onPlaceBlock(BlockEvent.EntityPlaceEvent event) {
+        if(event.getPlacedBlock().getBlock().equals(new BlockMineralMiner())){
+            BlockPos pos = event.getPos();
+            boolean iscanceled = true;
+            Chunk chunk = new Chunk(event.getWorld(), pos.getX() >> 4, pos.getZ() >> 4);
+            for (TileEntity entity : chunk.getTileEntityMap().values()) {
+                if (entity instanceof TileMineralMiner) {
+                    iscanceled = false;
+                    break;
+                }
+            }
+            event.getEntity().sendMessage(new TextComponentTranslation("infiniadons.mineralminer.limit"));
+            event.setCanceled(iscanceled);
         }
     }
     @SubscribeEvent
@@ -153,7 +173,7 @@ public class EventHandler {
                                 players.add(player);
                             }
                         }
-                        ChunkDimPos pos;
+                        ChunkDimPos pos=new ChunkDimPos(0,0,0);
                         List<EntityPlayer> battlingteam = new ArrayList<>();
                         if (!capability.isDefence()) {
                             if (players.equals(onlinePlayer)) {
@@ -167,6 +187,7 @@ public class EventHandler {
 
                                     }
                                 }
+                                WarUtils.instance.setTurrentAttackPlayer(event.getEntity().world,pos.posX,pos.posZ,false);
                                 for (EntityPlayer player1 : battlingteam) {
                                     if (player1.hasCapability(CapabilityHandler.capabilityWar, null)) {
                                         ICapabilityWar capabilityWar = player1.getCapability(CapabilityHandler.capabilityWar, null);

@@ -3,9 +3,8 @@ package com.maxmium.infiniaddons;
 import com.maxmium.infiniaddons.Block.BlockAreaBlock;
 import com.maxmium.infiniaddons.Block.BlockCobblestoneGenerator;
 import com.maxmium.infiniaddons.Block.BlockEnergyInjector;
-import com.maxmium.infiniaddons.Tile.TileAreaBlock;
-import com.maxmium.infiniaddons.Tile.TileCobblestoneGenerator;
-import com.maxmium.infiniaddons.Tile.TileEnergyInjector;
+import com.maxmium.infiniaddons.Block.BlockMineralMiner;
+import com.maxmium.infiniaddons.Tile.*;
 import com.maxmium.infiniaddons.api.IModelRegister;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -32,6 +31,7 @@ public class ModBlocks{
     public static BlockEnergyInjector blockEnergyInjector=new BlockEnergyInjector();
     public static BlockCobblestoneGenerator blockCobblestoneGenerator=new BlockCobblestoneGenerator();
     public static BlockAreaBlock blockAreaBlock=new BlockAreaBlock();
+    public static BlockMineralMiner blockMineralMiner=new BlockMineralMiner();
 
     public static void init() {
         if(Loader.isModLoaded("ic2")) {
@@ -45,7 +45,10 @@ public class ModBlocks{
         registerBlock(blockAreaBlock);
         registerItemBlock(blockAreaBlock);
         GameRegistry.registerTileEntity(TileAreaBlock.class,"area_block");
-
+        registerBlock(blockMineralMiner);
+        registerItemBlock(blockMineralMiner);
+        GameRegistry.registerTileEntity(TileMineralMinerMK1.class,"mineral_miner_mk1");
+        GameRegistry.registerTileEntity(TileMineralMinerMK2.class,"mineral_miner_mk2");
     }
 
     public static <V extends Block> V registerBlock(V block) {

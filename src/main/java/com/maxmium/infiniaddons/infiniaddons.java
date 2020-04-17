@@ -29,11 +29,11 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import java.util.UUID;
 
 
-@Mod(modid = infiniaddons.MODID, name = infiniaddons.NAME, version = infiniaddons.VERSION, acceptedMinecraftVersions = "1.12.2",dependencies = "required-after:avaritia@[3.3.0]")
+@Mod(modid = infiniaddons.MODID, name = infiniaddons.NAME, version = infiniaddons.VERSION, acceptedMinecraftVersions = "1.12.2")
 public class infiniaddons {
     public static final String MODID="infiniaddons";
     public static final String NAME="Infinity Addons";
-    public static final String VERSION="1.0.0";
+    public static final String VERSION="1.0.3";
     @Mod.Instance(infiniaddons.MODID)
     public static infiniaddons instance;
 @SidedProxy(clientSide = "com.maxmium.infiniaddons.client.ClientProxy",serverSide = "com.maxmium.infiniaddons.common.CommonProxy")

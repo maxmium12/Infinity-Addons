@@ -19,8 +19,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.fml.common.Loader;
+import omtteam.openmodularturrets.OpenModularTurrets;
+import omtteam.openmodularturrets.tileentity.TurretBase;
 
 import java.util.*;
 
@@ -96,6 +102,7 @@ public class WarSubStart extends CommandBase {
                     war.setDefence(true);
                     CommonUtils.syncWarCapability((EntityPlayerMP)player1);
                 }
+                WarUtils.instance.setTurrentAttackPlayer(sender.getEntityWorld(),chunkDimPos.posX,chunkDimPos.posZ,true);
                 ClaimedChunks.instance.unclaimChunk(chunk.getTeam().getOwner(), chunkDimPos);
                 ClaimedChunks.instance.claimChunk(fakeplayer, chunkDimPos);
                 ForgePlayer forgePlayer = Universe.get().getPlayer(player1.getUniqueID());

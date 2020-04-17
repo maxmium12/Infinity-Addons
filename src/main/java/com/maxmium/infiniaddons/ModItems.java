@@ -1,10 +1,7 @@
 package com.maxmium.infiniaddons;
 
 import com.maxmium.infiniaddons.api.IModelRegister;
-import com.maxmium.infiniaddons.item.ItemElectronicBall;
-import com.maxmium.infiniaddons.item.ItemEndestSword;
-import com.maxmium.infiniaddons.item.ItemEnergyDust;
-import com.maxmium.infiniaddons.item.ItemEnergySword;
+import com.maxmium.infiniaddons.item.*;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +20,9 @@ public class ModItems {
     public static ItemEnergySword itemEnergySword;
     public static ItemElectronicBall itemElectronicBall;
     public static ItemEndestSword itemEndestSword;
+    public static ItemProspectingPick.copperProspectingPick itemCopperProspectingPick=new ItemProspectingPick.copperProspectingPick();
+    public static ItemProspectingPick.ironProspectingPick itemIronProspectingPick=new ItemProspectingPick.ironProspectingPick();
+    public static ItemProspectingPick.diamondProspectingPick itemDiamondProspectingPick=new ItemProspectingPick.diamondProspectingPick();
     public static void init() {
         itemEnergyDust = new ItemEnergyDust();
         itemEnergyDust.setRegistryName("energy_dust");
@@ -35,6 +35,9 @@ public class ModItems {
         registerItem(itemElectronicBall);
         itemEndestSword=new ItemEndestSword();
         registerItem(itemEndestSword);
+        registerItem(itemCopperProspectingPick);
+        registerItem(itemIronProspectingPick);
+        registerItem(itemDiamondProspectingPick);
 
 
     }
@@ -54,6 +57,9 @@ public class ModItems {
         registerRender(itemEnergyDust);
         registerRender(itemEnergySword);
         registerRender(itemElectronicBall);
+        registerRender(itemCopperProspectingPick);
+        registerRender(itemIronProspectingPick);
+        registerRender(itemDiamondProspectingPick);
     }
 
     @SideOnly(Side.CLIENT)

@@ -11,3 +11,4 @@ container.infiniaddons.cobblestonegenerator=Cobblestone Generator
 tile.energyinjector.name=Energy Injector
 tile.cobblestoneGenerator=Cobblestone Generator
 block.areablock.success=Get chunk success
+infiniaddons.prospect=You found %1$s mineral at here

@@ -46,6 +46,7 @@ public class BlockAreaBlock extends BlockContainer {
         super(Material.IRON);
         setResistance(Float.POSITIVE_INFINITY);
         setHardness(10F);
+        setHarvestLevel("stone",1);
         setSoundType(SoundType.STONE);
         setCreativeTab(CreativeTabs.MISC);
         setUnlocalizedName("areaBlock");

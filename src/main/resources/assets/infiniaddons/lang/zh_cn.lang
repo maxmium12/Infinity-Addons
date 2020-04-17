@@ -16,3 +16,4 @@ block.areablock.deny=禁止在此获取区块
 block.areablock.no_team=你没有队伍
 block.areablock.dim_deny=禁止在此世界获取区块
 block.areablock.already_claimed=此区块已经被领取了
+infiniaddons.prospect=你在这找到了%1$s矿脉
